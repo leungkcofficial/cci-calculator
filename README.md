@@ -1,11 +1,11 @@
 # CCI Calculator
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/cci-calculator)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/leungkcofficial/cci-calculator)
 
 A web application that converts patient ICD-10 diagnosis codes into Charlson Comorbidity Index (CCI) scores.
 
-**GitHub Repository**: [https://github.com/yourusername/cci-calculator](https://github.com/yourusername/cci-calculator)
+**GitHub Repository**: [https://github.com/leungkcofficial/cci-calculator](https://github.com/leungkcofficial/cci-calculator)
 
 ## Overview
 
@@ -40,7 +40,7 @@ cci_calculator/
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/cci-calculator.git
+   git clone https://github.com/leungkcofficial/cci-calculator.git
    cd cci-calculator
    ```
 2. Install dependencies:
@@ -56,7 +56,7 @@ cci_calculator/
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/cci-calculator.git
+   git clone https://github.com/leungkcofficial/cci-calculator.git
    cd cci-calculator
    ```
 2. Build and start the Docker container:
