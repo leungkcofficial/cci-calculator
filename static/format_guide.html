@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCI Calculator - File Format Guide</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .format-section {
+            margin-bottom: 2rem;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0d6efd;
+        }
+        .field-table th {
+            background-color: #f8f9fa;
+        }
+        .download-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .format-card {
+            border-left: 4px solid #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="my-4 text-center">
+            <h1>File Format Guide</h1>
+            <p class="lead">Learn how to properly format your input files for the CCI Calculator</p>
+            <a href="/static/index.html" class="btn btn-outline-primary mt-2">← Back to Calculator</a>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <!-- Introduction -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Introduction</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>The CCI Calculator accepts patient data in three formats: CSV, Excel, and JSON. This guide explains the required fields and format for each file type.</p>
+                        <p>All formats require the following information:</p>
+                        <ul>
+                            <li><strong>Patient ID</strong> - A unique identifier for each patient</li>
+                            <li><strong>Age Information</strong> - Either the patient's age OR both date of birth and entry date</li>
+                            <li><strong>ICD-10 Codes</strong> - One or more valid ICD-10 diagnosis codes (maximum 30 codes per patient)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Required Fields -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Required Fields</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered field-table">
+                                <thead>
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Type</th>
+                                        <th>Required</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>patient_id</code></td>
+                                        <td>String</td>
+                                        <td>Yes</td>
+                                        <td>Unique identifier for the patient</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>age</code></td>
+                                        <td>Integer</td>
+                                        <td>Conditional*</td>
+                                        <td>Patient's age (0-120)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>dob</code></td>
+                                        <td>Date (YYYY-MM-DD)</td>
+                                        <td>Conditional*</td>
+                                        <td>Patient's date of birth</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>entry_date</code></td>
+                                        <td>Date (YYYY-MM-DD)</td>
+                                        <td>Conditional*</td>
+                                        <td>Date of record entry/assessment</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>icd_codes</code></td>
+                                        <td>Array/List of Strings</td>
+                                        <td>Yes</td>
+                                        <td>List of ICD-10 diagnosis codes (max 30)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="mt-2"><small>* Either <code>age</code> OR both <code>dob</code> and <code>entry_date</code> must be provided.</small></p>
+                        
+                        <h6 class="mt-4">ICD-10 Code Format</h6>
+                        <p>ICD-10 codes must follow the standard format:</p>
+                        <ul>
+                            <li>Start with a letter (A-Z)</li>
+                            <li>Followed by one or more digits</li>
+                            <li>Optionally include a decimal point and additional digits</li>
+                            <li>Example: <code>I21.0</code>, <code>E11.9</code>, <code>C50.9</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CSV Format -->
+                <div class="card mb-4 format-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">CSV Format</h5>
+                    </div>
+                    <div class="card-body format-section">
+                        <p>CSV files should include a header row with the field names, followed by data rows for each patient.</p>
+                        
+                        <h6>Example CSV Structure:</h6>
+                        <div class="code-block">patient_id,age,icd_codes
+P001,45,"I21.0,I50.9,E11.9"
+P002,67,"C50.9,C79.3,I10"
+P003,82,"F03,J44.9"</div>
+
+                        <h6>Alternative with DOB instead of Age:</h6>
+                        <div class="code-block">patient_id,dob,entry_date,icd_codes
+P001,1980-05-15,2025-04-30,"I21.0,I50.9,E11.9"
+P002,1958-03-22,2025-04-30,"C50.9,C79.3,I10"
+P003,1943-11-10,2025-04-30,"F03,J44.9"</div>
+
+                        <p><strong>Notes:</strong></p>
+                        <ul>
+                            <li>The <code>icd_codes</code> column should contain comma-separated ICD-10 codes</li>
+                            <li>Enclose the ICD codes in quotes to ensure they're parsed as a single field</li>
+                            <li>Date fields should use the YYYY-MM-DD format</li>
+                        </ul>
+                        
+                        <a href="/static/examples/example.csv" class="download-link btn btn-sm btn-outline-primary">Download Example CSV</a>
+                    </div>
+                </div>
+
+                <!-- Excel Format -->
+                <div class="card mb-4 format-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Excel Format</h5>
+                    </div>
+                    <div class="card-body format-section">
+                        <p>Excel files (.xlsx, .xls) should have the same structure as CSV files, with column headers in the first row.</p>
+                        
+                        <h6>Excel Structure:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>patient_id</th>
+                                        <th>age</th>
+                                        <th>icd_codes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>P001</td>
+                                        <td>45</td>
+                                        <td>I21.0,I50.9,E11.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>P002</td>
+                                        <td>67</td>
+                                        <td>C50.9,C79.3,I10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>P003</td>
+                                        <td>82</td>
+                                        <td>F03,J44.9</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p><strong>Notes:</strong></p>
+                        <ul>
+                            <li>ICD codes can be entered as comma-separated values in a single cell</li>
+                            <li>Alternatively, you can use separate columns for each ICD code (e.g., <code>icd_code_1</code>, <code>icd_code_2</code>, etc.)</li>
+                            <li>The system will read from the first sheet in the workbook</li>
+                        </ul>
+                        
+                        <a href="/static/examples/example.xlsx.csv" class="download-link btn btn-sm btn-outline-primary">Download Example (CSV format)</a>
+                        <p class="mt-2"><small>Note: This is a CSV file that can be opened in Excel and saved as an .xlsx file.</small></p>
+                    </div>
+                </div>
+
+                <!-- JSON Format -->
+                <div class="card mb-4 format-card">
+                    <div class="card-header">
+                        <h5 class="mb-0">JSON Format</h5>
+                    </div>
+                    <div class="card-body format-section">
+                        <p>JSON files can use two different structures:</p>
+                        
+                        <h6>Option 1: Array of Patient Records</h6>
+                        <div class="code-block">[
+  {
+    "patient_id": "P001",
+    "age": 45,
+    "icd_codes": ["I21.0", "I50.9", "E11.9"]
+  },
+  {
+    "patient_id": "P002",
+    "age": 67,
+    "icd_codes": ["C50.9", "C79.3", "I10"]
+  },
+  {
+    "patient_id": "P003",
+    "dob": "1943-11-10",
+    "entry_date": "2025-04-30",
+    "icd_codes": ["F03", "J44.9"]
+  }
+]</div>
+
+                        <h6>Option 2: Object with Patients Array</h6>
+                        <div class="code-block">{
+  "patients": [
+    {
+      "patient_id": "P001",
+      "age": 45,
+      "icd_codes": ["I21.0", "I50.9", "E11.9"]
+    },
+    {
+      "patient_id": "P002",
+      "age": 67,
+      "icd_codes": ["C50.9", "C79.3", "I10"]
+    },
+    {
+      "patient_id": "P003",
+      "dob": "1943-11-10",
+      "entry_date": "2025-04-30",
+      "icd_codes": ["F03", "J44.9"]
+    }
+  ]
+}</div>
+
+                        <p><strong>Notes:</strong></p>
+                        <ul>
+                            <li>The <code>icd_codes</code> field should be an array of strings</li>
+                            <li>Date fields should use the YYYY-MM-DD format as strings</li>
+                            <li>The age field should be a number</li>
+                        </ul>
+                        
+                        <a href="/static/examples/example.json" class="download-link btn btn-sm btn-outline-primary">Download Example JSON</a>
+                    </div>
+                </div>
+
+                <!-- Common Errors -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Common Errors</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Error</th>
+                                        <th>Description</th>
+                                        <th>Solution</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Missing required fields</td>
+                                        <td>Patient ID or ICD codes are missing</td>
+                                        <td>Ensure each record has at least patient_id and icd_codes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Missing age information</td>
+                                        <td>Neither age nor dob+entry_date provided</td>
+                                        <td>Include either age OR both dob and entry_date</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invalid ICD-10 code format</td>
+                                        <td>ICD codes don't match the required pattern</td>
+                                        <td>Ensure codes start with a letter followed by numbers (e.g., I21.0)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invalid date format</td>
+                                        <td>Dates not in YYYY-MM-DD format</td>
+                                        <td>Use ISO date format (YYYY-MM-DD)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Age out of range</td>
+                                        <td>Age value less than 0 or greater than 120</td>
+                                        <td>Ensure age is between 0 and 120</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="my-4 text-center text-muted">
+            <p>&copy; 2025 CCI Calculator</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+patient_id,age,icd_codes,description
+P001,45,"I21.0,I50.9,E11.9","Patient with myocardial infarction, heart failure, and diabetes without complications"
+P002,67,"C50.9,C79.3,I10","Patient with breast cancer and metastatic cancer"
+P003,82,"F03,J44.9","Patient with dementia and chronic pulmonary disease"
+P004,38,"B20,B59","Patient with HIV and AIDS"
+P005,60,"I21.0,I22.0,I25.2","Patient with multiple cardiac conditions"
+
+patient_id,dob,entry_date,icd_codes,description
+P006,1980-01-01,2025-04-30,"Z00.0","Patient with no CCI conditions"
+P007,1940-06-15,2025-04-30,"C80.0,C79.5,C77.0","Patient with metastatic cancer"
+P008,1950-05-15,2025-04-30,"G45.9,G81.9","Patient with cerebrovascular disease and hemiplegia"

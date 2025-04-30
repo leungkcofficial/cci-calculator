@@ -1,0 +1,97 @@
+{
+  "patients": [
+    {
+      "patient_id": "P001",
+      "age": 45,
+      "icd_codes": ["I21.0", "I50.9", "E11.9"],
+      "description": "Patient with myocardial infarction, heart failure, and diabetes without complications"
+    },
+    {
+      "patient_id": "P002",
+      "age": 67,
+      "icd_codes": ["C50.9", "C79.3", "I10"],
+      "description": "Patient with breast cancer and metastatic cancer to test hierarchy rule"
+    },
+    {
+      "patient_id": "P003",
+      "dob": "1950-05-15",
+      "entry_date": "2025-04-30",
+      "icd_codes": ["G45.9", "G81.9"],
+      "description": "Patient with cerebrovascular disease and hemiplegia to test hierarchy rule"
+    },
+    {
+      "patient_id": "P004",
+      "age": 72,
+      "icd_codes": ["K70.3", "K72.9"],
+      "description": "Patient with mild liver disease and severe liver disease to test hierarchy rule"
+    },
+    {
+      "patient_id": "P005",
+      "age": 55,
+      "icd_codes": ["E11.9", "E11.5"],
+      "description": "Patient with diabetes without and with complications to test hierarchy rule"
+    },
+    {
+      "patient_id": "P006",
+      "age": 82,
+      "icd_codes": ["N18.3", "N18.6"],
+      "description": "Patient with mild/moderate and severe renal disease to test hierarchy rule"
+    },
+    {
+      "patient_id": "P007",
+      "age": 38,
+      "icd_codes": ["B20", "B59"],
+      "description": "Patient with HIV and AIDS to test hierarchy rule"
+    },
+    {
+      "patient_id": "P008",
+      "age": 90,
+      "icd_codes": ["F03", "J44.9", "M06.9", "K25.9"],
+      "description": "Patient with multiple conditions to test high CCI score"
+    },
+    {
+      "patient_id": "P009",
+      "dob": "1980-01-01",
+      "entry_date": "2025-04-30",
+      "icd_codes": ["Z00.0"],
+      "description": "Patient with no CCI conditions"
+    },
+    {
+      "patient_id": "P010",
+      "age": 60,
+      "icd_codes": ["I21.0", "I22.0", "I25.2"],
+      "description": "Patient with multiple codes mapping to same condition"
+    },
+    {
+      "patient_id": "P011",
+      "age": 75,
+      "icd_codes": ["INVALID", "I21.0"],
+      "description": "Patient with invalid ICD code to test error handling"
+    },
+    {
+      "patient_id": "P012",
+      "dob": "1940-06-15",
+      "entry_date": "2025-04-30",
+      "icd_codes": ["C80.0", "C79.5", "C77.0"],
+      "description": "Patient with metastatic cancer to test high weight condition"
+    },
+    {
+      "patient_id": "P013",
+      "age": 30,
+      "icd_codes": ["J45.9", "K76.0", "M32.9"],
+      "description": "Young patient with multiple conditions"
+    },
+    {
+      "patient_id": "P014",
+      "age": 50,
+      "icd_codes": ["I25.2", "I50.9", "J44.9", "E11.9", "N18.3", "M06.9"],
+      "description": "Patient with many conditions to test comprehensive scoring"
+    },
+    {
+      "patient_id": "P015",
+      "age": 85,
+      "icd_codes": ["G30.9", "F03"],
+      "description": "Elderly patient with dementia"
+    }
+  ]
+}

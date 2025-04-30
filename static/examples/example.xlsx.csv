@@ -1,0 +1,6 @@
+patient_id,age,icd_codes,description
+P001,45,"I21.0,I50.9,E11.9","Patient with myocardial infarction, heart failure, and diabetes without complications"
+P002,67,"C50.9,C79.3,I10","Patient with breast cancer and metastatic cancer"
+P003,82,"F03,J44.9","Patient with dementia and chronic pulmonary disease"
+P004,38,"B20,B59","Patient with HIV and AIDS"
+P005,60,"I21.0,I22.0,I25.2","Patient with multiple cardiac conditions"

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCI Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="my-4 text-center">
+            <h1>Charlson Comorbidity Index Calculator</h1>
+            <p class="lead">Upload patient data to calculate CCI scores</p>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Legal Disclaimer -->
+                <div class="card mb-4 disclaimer-card">
+                    <div class="card-header bg-warning-subtle">
+                        <h5 class="mb-0">Legal Disclaimer</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="disclaimer-text">
+                            This program is a software project based on Glasheen WP, Cordier T, Gumpina R, et al. 
+                            Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. 
+                            <em>Am Health Drug Benefits</em>. 2019;12(4):188–197.
+                            No warranty or responsibility is assumed for medical-legal consequences of incorrect CCI calculation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Upload Form -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Upload Patient Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="upload-form" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="file-input" class="form-label">Select File</label>
+                                <input type="file" class="form-control" id="file-input" accept=".csv,.xlsx,.xls,.json" required>
+                                <div class="form-text">
+                                    Supported formats: CSV, Excel (.xlsx, .xls), JSON
+                                    <a href="/static/format_guide.html" class="ms-2 text-decoration-none">
+                                        <strong>View Format Guide</strong>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="format-select" class="form-label">File Format</label>
+                                <select class="form-select" id="format-select" required>
+                                    <option value="csv">CSV</option>
+                                    <option value="excel">Excel</option>
+                                    <option value="json">JSON</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="return-format" class="form-label">Return Format</label>
+                                <select class="form-select" id="return-format">
+                                    <option value="json">JSON</option>
+                                    <option value="csv">CSV</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="include-details" checked>
+                                <label class="form-check-label" for="include-details">
+                                    Include detailed results
+                                </label>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary" id="submit-btn">Upload and Calculate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Error Messages -->
+                <div id="error-container" class="alert alert-danger mb-4 d-none">
+                    <h5>Error</h5>
+                    <div id="error-message"></div>
+                    <div id="error-details" class="mt-2 small"></div>
+                </div>
+
+                <!-- Processing Status -->
+                <div id="processing-container" class="card mb-4 d-none">
+                    <div class="card-header">
+                        <h5 class="mb-0">Processing</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                        </div>
+                        <p id="processing-status">Processing your file. Please wait...</p>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-container" class="card mb-4 d-none">
+                    <div class="card-header">
+                        <h5 class="mb-0">Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="results-summary" class="mb-3">
+                            <!-- Summary will be inserted here -->
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button id="view-details-btn" class="btn btn-outline-primary">View Detailed Results</button>
+                            <button id="download-results-btn" class="btn btn-success">Download Results</button>
+                        </div>
+                        <div id="results-details" class="mt-4 d-none">
+                            <h6>Detailed Results</h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm" id="results-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient ID</th>
+                                            <th>Age</th>
+                                            <th>CCI Score</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="results-table-body">
+                                        <!-- Results will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="my-4 text-center text-muted">
+            <p>&copy; 2025 CCI Calculator</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- API JS -->
+    <script src="/static/js/api.js"></script>
+    <!-- Main JS -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

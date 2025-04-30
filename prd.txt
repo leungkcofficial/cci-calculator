@@ -1,0 +1,111 @@
+
+<context>
+# Overview
+This project is a self-hostable **web application** that converts patient ICD-10 diagnosis codes into Charlson Comorbidity Index (CCI) scores based on the refined mappings from Glasheen et al. 2019 (CDMF CCI system).
+It solves the problem of standardized risk scoring for mortality and morbidity prediction, used by researchers, healthcare systems, insurance providers, and machine learning workflows.
+It is designed to be deployed easily via **Docker Compose** and **integrate into MCP servers** or similar infrastructure.
+
+# Core Features
+1. Multi-format Input Upload via Web
+- What it does: Allows users to upload files in CSV, Excel, or JSON format.
+- Why it's important: Supports a variety of common clinical data export formats.
+- How it works: Frontend accepts files, validates structure, sends to backend API.
+
+2. ICD-10 Code Mapping to CCI (Explicit Mapping)
+- What it does: Translates ICD-10 codes to specific CCI disease categories.
+- Why it's important: Essential for calculating comorbidity scores.
+- How it works: Uses a well-defined dictionary (editable in future) to map ICD-10 codes to conditions.
+
+3. Hierarchy Rule Enforcement (6 Explicit Rules)
+- What it does: Ensures the correct disease severity is prioritized in scoring.
+- Why it's important: Prevents double-counting and maintains clinical validity.
+- How it works: Enforces these 6 rules:
+  - Hemiplegia/Paraplegia trumps Cerebrovascular Disease
+  - Severe Liver Disease trumps Mild Liver Disease
+  - Diabetes with Complications trumps Diabetes without Complications
+  - Severe Renal Disease trumps Mild/Moderate Renal Disease
+  - Metastatic Cancer trumps Malignancy
+  - AIDS trumps HIV
+
+4. Legal Disclaimer
+- Displayed on upload page:
+"This program is a software project based on Glasheen WP, Cordier T, Gumpina R, et al. Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. *Am Health Drug Benefits*. 2019;12(4):188–197.
+No warranty or responsibility is assumed for medical-legal consequences of incorrect CCI calculation."
+
+5. API Endpoint
+- /predict/ — Accepts POST with file upload and returns calculated CCI scores.
+
+# User Experience
+User Personas:
+- Healthcare Data Scientists
+- Clinical Researchers
+- Machine Learning Engineers
+- Backend Integrators (MCP)
+
+Key User Flows:
+- Visit web page → Read upload instructions and legal disclaimer → Upload file → Validate → Receive result or error message.
+
+UI/UX Considerations:
+- Simple clean HTML+CSS first.
+- Future optional React frontend upgrade.
+- Clear and explicit error reporting if the file does not meet schema expectations.
+
+</context>
+
+<PRD>
+# Technical Architecture
+System Components:
+- Frontend: HTML, CSS (simple Bootstrap or plain; future optional React/TS upgrade)
+- Backend: FastAPI (Python)
+- File Validation Layer (Pandas, Pydantic)
+- ICD-10 to CCI Mapping Engine
+- Dockerfile
+- Docker Compose file
+
+Data Models:
+- UploadRequest: {key, gender, age or dob/date, icd_1, icd_2, ..., icd_n}
+- Output: DataFrame with CCI condition flags + total CCI score
+
+APIs and Integrations:
+- POST /predict: Accepts file upload
+- Returns CSV or JSON with results
+
+Infrastructure Requirements:
+- Python 3.8+
+- FastAPI
+- Pandas
+- Docker, Docker Compose
+
+# Development Roadmap
+MVP Requirements:
+- Upload form page (HTML)
+- FastAPI backend to receive and validate upload
+- ICD-10 to CCI mapping
+- Hierarchy logic
+- Age scoring
+- Output downloadable or shown
+- Docker containerization
+
+Future Enhancements:
+- Add frontend validation (JS)
+- Add login/authentication
+- Create dashboard for viewing upload history
+
+# Logical Dependency Chain
+- Start from: Basic file upload and validation
+- Then: ICD-10 to CCI mapping logic
+- Then: Hierarchy rule enforcement
+- Then: Age scoring logic
+- Then: Frontend integration
+- Finally: Dockerization
+
+# Risks and Mitigations
+- Data input inconsistencies → Strong server-side validation
+- Mapping dictionary changes → Keep mappings modular and editable
+- Deployment complexities → Use simple Docker Compose first
+
+# Appendix
+- Research: Glasheen WP, Cordier T, Gumpina R, et al. *Am Health Drug Benefits*. 2019.
+- ICD-10 mappings and hierarchy rules based on official supplement.
+
+</PRD>
